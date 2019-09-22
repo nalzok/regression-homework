@@ -319,6 +319,9 @@
                     \end{equation*}
                     成立。
                     从而$A$的广义逆可以是$A$和$\mathrm{I}$，不唯一。
+
+                    另一个反例是$A=\begin{pmatrix}0\end{pmatrix}$，此时$A^-$可取$\begin{pmatrix}0\end{pmatrix}$或$\begin{pmatrix}42\end{pmatrix}$或$\begin{pmatrix}-3.14\end{pmatrix}$等。
+                    认为退化的矩阵过于特殊的同学也可以自行构造对应的数量矩阵。
                 \item
                     记矩阵$A$的秩为$r$，对$A$作满秩分解
                     \begin{equation*}
@@ -398,7 +401,9 @@
             从而矩阵$\Sigma$	的特征值为$1+(n-1)\rho$（1重）和$1-\rho$（$n-1$重），所对应的特征向量即为上述特征向量。
 
             由于$\Sigma$是对称矩阵，所以判断$\Sigma$是否（半）正定只需考察其特征值。
-            于是容易得出，$\rho=-1/(n-1)$或$\rho=1$时，$\Sigma$严格半正定；$-1/(n-1) < \rho <1$时，$\Sigma$正定。
+            于是容易得出，$\rho=-\frac{1}{n-1}$或$\rho=1$时，$\Sigma$严格半正定；$-\frac{1}{n-1} < \rho <1$时，$\Sigma$正定。
+
+            当然硬要抬杠的话，$n=1$的情况还需要另外讨论。
         \end{solution}
 
     \item	% 8
@@ -480,9 +485,9 @@
         \end{proof}
 
     \item	% 10
-        设矩阵$A\, ,B$均为半正定矩阵且$A\le B$。
+        设矩阵$A\, ,B$均为半正定矩阵（且$A\le B$）。
         \begin{enumerate}[label=(\roman*)]
-            \item 证明：$AB^-A\le A$；\\
+            \item 证明：$AB^-A\le A$；
             \item$AB^-A$依赖于广义逆的选择吗？
         \end{enumerate}
 
@@ -490,8 +495,15 @@
             \begin{enumerate}[label=(\roman*)]
                 \def\labelenumi{(\roman{enumi})}
             \item
-                事实上，$B^-$不一定是对称矩阵，从而无法保证$AB^-A$
-                是对称矩阵，偏序关系无从谈起。
+                首先，如果没有$A\le B$的条件，
+                \begin{equation*}
+                    A = \begin{pmatrix} 1 \end{pmatrix},
+                    B = \begin{pmatrix} 0 \end{pmatrix},
+                    B^- = \begin{pmatrix} 42 \end{pmatrix}.
+                \end{equation*}
+                即可作为反例。
+
+                加入这个条件之后，$B^-$仍不一定是对称矩阵，从而无法保证$AB^-A$是对称矩阵，偏序关系无从谈起。
             \item
         \end{enumerate}
     \end{proof}
@@ -599,8 +611,10 @@
     举例说明$A\le B$未必成立。
 
     \begin{proof}
-        令$A=\mathrm{diag}(1\, ,3\, ,0\, ,0)\ ,B=\mathrm{diag}(1\, ,1\, ,1\, ,0)$，则易见 $A$每一列都可由 $B$线性表出，从而$\mathcal{M}(A)\subset \mathcal{M}(B)$。
-        取向量$x=(0\, ,1\, ,0\, ,0)'$，则 $x'Ax>x'Bx$，即$A\le B$不成立。
+        令$A=\mathrm{diag}(1\, ,3\, ,0\, ,0)\ ,B=\mathrm{diag}(1\, ,1\, ,1\, ,0)$，则易见$A$每一列都可由$B$线性表出，从而$\mathcal{M}(A)\subset \mathcal{M}(B)$。
+        取向量$x=(0\, ,1\, ,0\, ,0)'$，则$x'Ax>x'Bx$，即$A\le B$不成立。
+
+        事实上，假设命题成立，则根据对称性可知$\mathcal{M}(A) = \mathcal{M}(B) \implies \forall x, x'Ax = x'Bx \implies A = B$。为了构造反例，注意到所有满秩矩阵的列空间均为$\mathbb{R}^n$，因此只需找两个不同的满秩矩阵即可。
     \end{proof}
 \end{enumerate}
 
