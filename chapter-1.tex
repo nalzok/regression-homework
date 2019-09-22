@@ -1,0 +1,607 @@
+\title{《回归分析》作业参考答案 \\ \textbf{第一章}}
+\author{
+    sword\\
+    2017级统计系
+    \and
+    nalzok\\
+    2016级统计系
+}
+\date{\today}
+
+\documentclass[10pt]{article}
+\usepackage[UTF8]{ctex}
+% \setCJKmainfont{PingFangSC-Regular}	% I really like Ping Fang, but I'm not sure if it's legal to use.
+\setCJKmainfont{SourceHanSansCN-Regular}	% Source Han Sans is open source and free, so let's go for it for the time being.
+\usepackage{amssymb,amsmath,amsthm}
+\let\oldproofname=\proofname
+\renewcommand{\proofname}{\rm\bf{\oldproofname}}
+\theoremstyle{definition}
+\newtheorem*{solution}{解}
+\theoremstyle{definition}
+\newtheorem*{definition}{定义}
+\usepackage{enumitem}
+
+\begin{document}
+\maketitle
+
+\newpage
+
+\section{第一节}
+
+\begin{enumerate}
+    \item	% 1
+        矩阵$A$为$n$阶实对称矩阵，证明：
+
+        \begin{enumerate}[label=(\roman*), start=3]
+            \item
+                矩阵$A$有$n$个实特征值（记作$\lambda_1\, ,\lambda_2\, ,\cdots ,\lambda_n$），而且$n$个特征向量可正交化；
+            \item
+                存在正交阵$P$使得
+                \begin{equation*}
+                    A = P
+                    \begin{pmatrix}
+                        \lambda_1 & & \\
+                                  & \ddots & \\
+                                  & & \lambda_n
+                    \end{pmatrix}
+                    P' \triangleq P\Lambda P'
+                \end{equation*}
+            \item
+                对任意正整数$s$，有
+                \begin{equation*}
+                    A^s = P
+                    \begin{pmatrix}
+                        \lambda_1^s & & \\
+                                    & \ddots & \\
+                                    & & \lambda_n^s
+                    \end{pmatrix}
+                    P' \triangleq P\Lambda^s P'
+                \end{equation*}
+                从而$\mathrm{tr}(A^s)=\sum_{i=1}^{n}\lambda_i^s$；
+            \item
+                $A$是非奇异的当且仅当$\lambda_i \ne 0\ (\forall i)$，且矩阵$A^{-1}$的特征值为$\lambda_i^{-1}\text{，}i=1\, ,2\, ,\cdots ,n$；
+            \item
+                矩阵$\mathrm{I}_n+cA$的特征值为$1+c\lambda_i\text{，}i=1\, ,2\, ,\cdots ,n$；
+            \item
+                半正定矩阵的特征值均非负，从而半正定矩阵的迹非负。
+        \end{enumerate}
+
+        \begin{proof}
+            \begin{enumerate}[label=(\roman*), start=3]
+                \item
+                    由代数学基本定理，知矩阵$A$的特征多项式在复数域中有且仅有$n$个根。
+                    又由(i)得$A$的复特征值均为实数，故矩阵$A$有$n$个实特征值。
+                    下面，借用(iv)的结论，矩阵$A$可相似对角化，则$A$各个特征值的几何重数等于代数重数，所以$A$有$n$个线性无关的特征向量，从而$n$个特征向量可正交化。
+                \item
+                    对实对称矩阵$A$的阶数$n$作数学归纳法。
+
+                    $n=1$时，$A$本身即为对角阵，再取$P$为一阶单位阵，结论成立。
+
+                    假设任一$n-1$阶实对称矩阵都能正交相似于一对角阵，下面来看$n$阶的情形。
+
+                    设$\lambda_1$为$A$的一个特征值，$\eta_1$为对应的单位特征向量，则$\eta_1$可扩成一个标准正交基$\eta_1\, ,\cdots ,\eta_n$，并记矩阵$T=(\eta_1\, ,\cdots ,\eta_n)$。从而
+                    \begin{equation*}
+                        AT=T
+                        \begin{pmatrix}
+                            \lambda & \alpha \\
+                            0 & B
+                        \end{pmatrix}
+                    \end{equation*}
+                    又因为
+                    \begin{equation*}
+                        \begin{pmatrix}
+                            \lambda & \alpha \\
+                            0 & B
+                        \end{pmatrix}'=(T'AT)'=T'AT=
+                        \begin{pmatrix}
+                            \lambda & \alpha \\
+                            0 & B
+                        \end{pmatrix}
+                    \end{equation*}
+                    所以$\alpha = 0$，矩阵$B$为实对称矩阵。由归纳假设，存在$n-1$阶正交阵$Q$，使得$B=Q'\Lambda_1 Q$，其中$\Lambda_1$为对角阵。
+                    令$Q_1=\mathrm{diag}(1\, ,Q)$，就有
+                    \begin{equation*}
+                        T'AT=Q'
+                        \begin{pmatrix}
+                            \lambda & 0 \\
+                            0 & \Lambda_1
+                        \end{pmatrix}Q
+                    \end{equation*}
+                    再取$P=Q_1T'$，即可证得$n$阶实对称矩阵亦正交相似于一对角矩阵。
+
+                    根据数学归纳法，结论成立。
+                \item
+                    注意到
+                    $PP'=\mathrm{I}$，从而$A^s=(P\Lambda P')^s=P\Lambda P'P\Lambda P'\cdots P\Lambda P'=P\Lambda^sP'$。
+                    又因为相似矩阵有相同的迹，故$\mathrm{tr}(A^s)=\mathrm{tr}(\Lambda^s)=\sum_{i=1}^{n}\lambda_i^s$。
+                \item
+                    矩阵$A$非奇异$\Leftrightarrow$矩阵$\Lambda$非奇异$\Leftrightarrow$$\lambda_i \ne 0\ (\forall i)$。
+
+                    又$A^{-1}=(P\Lambda P')^{-1}=P\Lambda^{-1} P'$及相似矩阵有相同的特征值，得矩阵$A^{-1}$的特征值为$\lambda_i^{-1}\text{，}i=1\, ,2\, ,\cdots ,n$。
+                \item
+                    注意到$\mathrm{I}_n+cA=PP'+P(c\Lambda)P'=P(\mathrm{I}_n+c\Lambda)P'$，与(vi)类似即可得证。
+                \item
+                    任取非零向量$x$，记向量$y=Px$，则由$P$满秩知$y$亦为非零向量。
+                    从而
+                    \begin{equation*}
+                        x'\Lambda x=x'P'APx=y'Ay \ge 0
+                    \end{equation*}
+                    将$x$取遍标准单位向量即可证得结论。
+            \end{enumerate}
+        \end{proof}
+
+    \item 	% 2
+        设$A$为实对称矩阵，用拉格朗日乘数法证明：
+        \begin{equation*}
+            \max_{x'x \ne 0} \frac{x'Ax}{x'x} = \lambda_{\max}(A)\quad \text{及} \quad \min_{x'x \ne 0} \frac{x'Ax}{x'x} = \lambda_{\min}(A)
+        \end{equation*}
+
+        \begin{proof}
+            不失一般性，考虑$x$为单位向量的情形即可。
+            取单位向量$e=(x_1\, ,\cdots ,x_n)'$，则$e$的取值范围为单位球面（从而是有界闭集）。
+            易见$e'Ae$为$e$的连续函数，而连续函数在有界闭集上必取得最大、最小值，从而结论中的最值运算是有意义的。
+
+            由$A$实对称，知存在正交阵$P$与对角阵$\Lambda$，使得$A=P'\Lambda P$。
+            从而
+            \begin{equation*}
+                e'Ae=e'P'\Lambda Pe \triangleq y'\Lambda y
+            \end{equation*}
+            由于正交变换保持距离且为可逆变换，所以向量$y$仍为单位向量且取值范围为单位球面。
+
+            记$y=(y_1\, ,\cdots ,y_n)'$，$\Lambda=\mathrm{diag}(\lambda_1\, ,\cdots ,\lambda_n)$，则
+            \begin{equation*}
+                y'\Lambda y=\lambda_1y_1^2+\cdots +\lambda_ny_n^2
+            \end{equation*}
+            令$f(y)=\lambda_1y_1^2+\cdots +\lambda_ny_n^2$，于是问题转化为求解
+            \begin{equation*}
+                \begin{aligned}
+        & \max_{y}f(y) \qquad \mathrm{s.t.} \ \sum_{i=1}^{n}y_i^2=1 \\
+        & \min_{y}f(y) \qquad \mathrm{s.t.} \ \sum_{i=1}^{n}y_i^2=1
+                \end{aligned}
+            \end{equation*}
+            应用拉格朗日乘数法，构造拉格朗日函数
+            \begin{equation*}
+                L(y\, ,\mu)= \lambda_1y_1^2+\cdots +\lambda_ny_n^2-\mu(y_1^2+\cdots +y_n^2-1)
+            \end{equation*}
+            上式两端对各分量求一阶偏导，得
+            \begin{equation*}
+                \begin{aligned}
+        & \frac{\partial L}{\partial y_i}=2\lambda_iy_i-2\mu y_i=0 \qquad i=1\, ,2\, ,\cdots ,n \\
+        & \frac{\partial L}{\partial \mu}=y_1^2+\cdots +y_n^2-1=0
+                \end{aligned}
+            \end{equation*}
+            解得$\mu=\lambda_i \, ,y=\epsilon_i\, ,f(\epsilon_i)=\lambda_i$，其中$\epsilon_i$为第$i$个分量为1，其余分量为0的单位向量。
+            由此，遍历$A$的特征值，知结论成立。
+        \end{proof}
+
+    \item 	% 3
+        设向量$\beta=(\beta_1\, ,\beta_2\, ,\cdots ,\beta_n)'$，证明：
+
+        \begin{enumerate}[label=(\roman*)]
+            \item
+                对任意$n$维向量$a$，有
+                \begin{equation*}
+                    \frac{\partial \beta' a}{\partial \beta}=a
+                \end{equation*}
+                对任意$n$列矩阵$A$，有
+                \begin{equation*}
+                    \frac{\partial A\beta}{\partial \beta'}=A
+                \end{equation*}
+            \item
+                若$A$为对称矩阵，则
+                \begin{equation*}
+                    \frac{\partial \beta' A\beta}{\partial \beta}=2A\beta
+                \end{equation*}
+        \end{enumerate}
+
+        \begin{proof}
+            \begin{enumerate}[label=(\roman*)]
+                \item
+                    设$a=(a_1\, ,a_2\, ,\cdots ,a_n)'$，则$\beta'a=a_1\beta_1+a_2\beta_2+\cdots +a_n\beta_n$。
+                    于是
+                    \begin{equation*}
+                        \frac{\partial \beta' a}{\partial \beta}
+                        =\left(\frac{\partial}{\partial \beta_1}\, ,\frac{\partial}{\partial \beta_2}\, ,\cdots ,\frac{\partial}{\partial \beta_n}\right)'(a_1\beta_1+a_2\beta_2+\cdots +a_n\beta_n)
+                        =(a_1\, ,a_2\, ,\cdots ,a_n)'
+                        =a
+                    \end{equation*}
+                    又设$A=(b_{ij})_n$，则 \begin{equation*}
+                        \begin{aligned}
+                            \frac{\partial A\beta}{\partial \beta'} & = \frac{\partial}{\partial \beta'}
+                            \begin{pmatrix}
+                                b_{11}\beta_1+\cdots +b_{1n}\beta_n \\
+                                b_{21}\beta_1+\cdots +b_{2n}\beta_n \\
+                                \vdots \\
+                                b_{n1}\beta_1+\cdots +b_{nn}\beta_n 
+                            \end{pmatrix}\\
+                                                                    & = 
+                                                                    \begin{pmatrix}
+                                                                        \frac{\partial}{\partial \beta_1} \\
+                                                                        \frac{\partial}{\partial \beta_2} \\
+                                                                        \vdots \\
+                                                                        \frac{\partial}{\partial \beta_n}
+                                                                    \end{pmatrix} (b_{11}\beta_1+\cdots +b_{1n}\beta_n\, ,\cdots , b_{n1}\beta_1+\cdots +b_{nn}\beta_n ) \\
+                                                                    & = A
+                        \end{aligned}
+                    \end{equation*}
+                \item
+                    对任意的$n$阶方阵$A=(b_{ij})_n$，有
+                    \begin{equation*}
+                        \begin{aligned}
+                            \frac{\partial \beta' A\beta}{\partial \beta}
+        &=\frac{\partial}{\partial \beta}\left(\sum_{i=1}^{n}\sum_{j=1}^{n}b_{ij}\beta_i\beta_j\right) \\
+        &=\left(\frac{\partial}{\partial \beta_1}\, ,\frac{\partial}{\partial \beta_2}\, ,\cdots ,\frac{\partial}{\partial \beta_n}\right)'\left(\sum_{i=1}^{n}\sum_{j=1}^{n}b_{ij}\beta_i\beta_j\right) \\
+        &=(A+A')\beta
+                        \end{aligned}
+                    \end{equation*}
+                    特别地，当$A$为对称矩阵时，有
+                    \begin{equation*}
+                        \frac{\partial \beta' A\beta}{\partial \beta}=2A\beta
+                    \end{equation*}
+            \end{enumerate}
+        \end{proof}
+
+    \item	% 4
+        设四分块矩阵 \begin{equation*}
+            \begin{pmatrix}
+                A & B \\
+                C & D
+            \end{pmatrix}
+        \end{equation*}满足$A$与$D-CA^{-1}B$
+        均可逆。给出上述四分块矩阵的逆矩阵。
+
+        \begin{solution}
+            记矩阵$M=D-CA^{-1}B$，则
+            \begin{equation*}
+                \begin{pmatrix}
+                    A^{-1} & \\
+                           & M^{-1}
+                \end{pmatrix}
+                \begin{pmatrix}
+                    \mathrm{I} & -M^{-1}B \\
+                               & \mathrm{I}
+                \end{pmatrix}
+                \begin{pmatrix}
+                    I & \\
+                    -A^{-1}C & \mathrm{I}
+                \end{pmatrix}
+                \begin{pmatrix}
+                    A & B \\
+                    C & D
+                \end{pmatrix}=\mathrm{I}
+            \end{equation*}
+            从而
+            \begin{equation*}
+                \begin{aligned}
+                    \begin{pmatrix}
+                        A & B \\
+                        C & D
+                    \end{pmatrix}^{-1} & =
+                    \begin{pmatrix}
+                        A^{-1} & \\
+                               & M^{-1}
+                    \end{pmatrix}
+                    \begin{pmatrix}
+                        \mathrm{I} & -M^{-1}B \\
+                                   & \mathrm{I}
+                    \end{pmatrix}
+                    \begin{pmatrix}
+                        \mathrm{I} & \\
+                        -A^{-1}C & \mathrm{I}
+                    \end{pmatrix} \\ & =
+                    \begin{pmatrix}
+                        A^{-1}+A^{-1}M^{-1}BA^{-1}C & -A^{-1}M^{-1}B \\
+                        -M^{-1}A^{-1}C & M^{-1}
+                    \end{pmatrix}
+                \end{aligned}
+            \end{equation*}
+        \end{solution}
+
+    \item	% 5
+        \begin{enumerate}[label=(\roman*)]
+            \item 举例说明矩阵$A$的广义逆$A^-$不唯一；
+            \item 给出计算矩阵$A$广义逆$A^-$的一般公式。 
+        \end{enumerate}
+
+        \begin{solution}
+            \begin{enumerate}[label=(\roman*)]
+                \item
+                    先回顾矩阵广义逆的定义。
+                    \begin{definition}
+                        设$A$是一个$s\times n$矩阵，矩阵方程$AXA=A$的通解称为$A$的广义逆矩阵，简称为$A$的广义逆，记作$A^{-}$。
+                    \end{definition}
+                    广义逆矩阵可以不唯一。事实上，对任意非单位阵的幂等阵$A$，有
+                    \begin{equation*}
+                        \begin{aligned}
+        & AAA=A \\
+        & A\mathrm{I}A=A
+                        \end{aligned}
+                    \end{equation*}
+                    成立。
+                    从而$A$的广义逆可以是$A$和$\mathrm{I}$，不唯一。
+                \item
+                    记矩阵$A$的秩为$r$，对$A$作满秩分解
+                    \begin{equation*}
+                        A=P
+                        \begin{pmatrix}
+                            \mathrm{I}_r & 0 \\
+                            0 & 0
+                        \end{pmatrix}Q
+                    \end{equation*}
+                    则矩阵$A$的广义逆的一般形式为
+                    \begin{equation*}
+                        A^-=Q^{-1}
+                        \begin{pmatrix}
+                            \mathrm{I}_r & B \\
+                            C & D 
+                        \end{pmatrix}P^{-1}
+                    \end{equation*}
+                    其中$B\, ,C\, ,D$分别是任意$r\times (s-r)\, ,(n-r)\times r\, ,(n-r)\times (s-r)$阶矩阵。
+                    证明请参阅丘维声著《高等代数》第一版上册251-252页。
+            \end{enumerate}
+        \end{solution}
+
+    \item	% 6
+        对任意$n\times p$阶矩阵$X$，证明：
+        \begin{enumerate}[label=(\roman*)]
+            \item 无论$(X'X)^-$如何变化，$X(X'X)^-X'$保持不变；\\
+            \item$X(X'X)^-X'$是一个从$\mathbb{R}^n$到$\mathcal{M}(X)$的投影矩阵。
+        \end{enumerate}
+
+        \begin{proof}
+            \begin{enumerate}[label=(\roman*)]
+                \item
+                    记矩阵$X$的秩为$r$。由线性代数的知识，知将$X$作一系列初等列变换，可得到一个列阶梯矩阵，即
+                    \begin{equation*}
+                        X=AQ
+                    \end{equation*}
+                    其中矩阵$A$为列阶梯矩阵（前$r$列为标准单位向量，后$p-r$列为0），$Q$为可逆矩阵。
+                    再适当交换矩阵$A$的行，得
+                    \begin{equation*}
+                        PA=
+                        \begin{pmatrix}
+                            \mathrm{I}_r & 0 \\
+                            0 & 0
+                        \end{pmatrix}\triangleq \Lambda
+                    \end{equation*}
+                    其中，$P$为若干行交换矩阵相乘得到的矩阵（因而是正交阵）。
+                    于是，我们得到了矩阵$X$的一个满秩分解$X=P'\Lambda Q$。
+                    从而$X'X=Q'\Lambda Q$。
+                    由第一章习题一5(2)的结论，$(X'X)^-$的一般形式为
+                    \begin{equation*}
+                        (X'X)^-=Q^{-1}
+                        \begin{pmatrix}
+                            \mathrm{I}_r & B \\
+                            C & D
+                        \end{pmatrix}(Q')^{-1}
+                    \end{equation*}
+                    其中$B\, ,C\, ,D$分别是任意
+                    $r\times (p-r)\, ,(n-r)\times r\, ,(n-r)\times (p-r)$阶矩阵。
+                    故
+                    \begin{equation*}
+                        X(X'X)^-X'=P'\Lambda P
+                    \end{equation*}
+                    而与$B\, ,C\, ,D$无关，即$X(X'X)^-X'$与$(X'X)^-$的选取无关。
+                \item
+                    由(1)知$X(X'X)^-X'=P'\Lambda P$，容易验证$X(X'X)^-X'$是一个对称幂等阵，且对$\forall \alpha \in \mathbb{R}^n$，$X(X'X)^-X'\alpha =X((X'X)^-X'\alpha)\in \mathcal{M}(X)$，从而结论成立。
+            \end{enumerate}
+        \end{proof}
+
+    \item	% 7
+        令矩阵$\Sigma =(1-\rho)\mathrm{I}_n+\rho 1_n1_n'$，其中$1_n$为元素全为1的$n$维向量。求$\Sigma$的特征值和对应的特征向量。
+        又问$\rho$取何值时$\Sigma$（半）正定？
+
+        \begin{solution}
+            由第一章习题一1(vii)的结论，只需考察矩阵$1_n1_n'$的特征值与特征向量即可。
+            因为$1_n1_n'$的秩为1且易见行和$n$为其特征值，所以矩阵$1_n1_n'$的特征值为$n$（1重）和0（$n-1$重）。
+            同时容易求出对应的特征值为$1_n$和$\epsilon_1-\epsilon_j\text{，}j=2\, ,\cdots ,n$。
+            从而矩阵$\Sigma$	的特征值为$1+(n-1)\rho$（1重）和$1-\rho$（$n-1$重），所对应的特征向量即为上述特征向量。
+
+            由于$\Sigma$是对称矩阵，所以判断$\Sigma$是否（半）正定只需考察其特征值。
+            于是容易得出，$\rho=-1/(n-1)$或$\rho=1$时，$\Sigma$严格半正定；$-1/(n-1) < \rho <1$时，$\Sigma$正定。
+        \end{solution}
+
+    \item	% 8
+        在$p$维向量空间$\mathbb{R}^p$中，超平面是由线性方程组$H_{(A,b)}=\{x\, |\, Ax=b\}$所定义的点集。
+        \begin{enumerate}[label=(\roman*)]
+            \item 取定点$x_0\in H_{(A,b)}$，证明：$H_{(A,b)}=\{x\, |\, (x-x_0) \perp \mathcal{M}(A')\}$；\\
+            \item 若矩阵$A$行满秩，对$\forall x\in \mathbb{R}^p$，计算欧氏距离$\mathrm{d}(x\, ,H_{(A,b)})$。
+        \end{enumerate}
+
+        \begin{solution}
+            不妨设$A$为$m\times p$阶矩阵。
+
+            \begin{enumerate}[label=(\roman*)]
+                \item
+                    记集合$S_1=\{x\, |\, Ax=b\}$，$S_2=\{x\, |\, (x-x_0) \perp \mathcal{M}(A')\}$。
+                    要证明$S_1$与$S_2$相互包含。
+
+                    一方面，任取$x\in S_1$，有$Ax=b$。
+                    对$\forall \alpha \in \mathcal{M}(A')$，存在向量$\beta \in \mathbb{R}^m$，使得$\alpha =A'\beta$。
+                    从而
+                    \begin{equation*}
+                        \begin{aligned}
+                            (\alpha \, ,x-x_0) & = \beta'A(x-x_0) \\
+                                               & = \beta'(b-b) =0
+                        \end{aligned}
+                    \end{equation*}
+                    即$(x-x_0)\perp \alpha \ (\, \forall \alpha \in \mathcal{M}(A')\, )$。
+                    所以$x \in S_2$，$S_1 \subset S_2$。
+
+                    另一方面，任取$y \in S_2$，有$(y-x_0)\perp \mathcal{M}(A')$。
+                    取$\mathbb{R}^m$中一个基$\gamma_1\, ,\cdots ,\gamma_m$，令矩阵$T=(\gamma_1\, ,\cdots ,\gamma_m)$，则$T$为$m$阶可逆矩阵。
+                    由于
+                    \begin{equation*}
+                        \begin{aligned}
+        & 0=(A'\gamma_1 \, ,y-x_0)=\gamma_1' (Ay-b) \\
+        & 0=(A'\gamma_2 \, ,y-x_0)=\gamma_2' (Ay-b) \\
+        & \cdots \\
+        & 0=(A'\gamma_m \, ,y-x_0)=\gamma_m' (Ay-b)
+                        \end{aligned}
+                    \end{equation*}
+                    从而$T'(Ay-b)=0$，$Ay-b=0$，故$y\in S_1$，$S_2 \subset S_1$。
+
+                    综上，$S_1$与$S_2$相互包含，结论成立。
+                    事实上，$H_{(A,b)}$为$\mathbb{R}^p$上的线性流形，$H_{(A,b)}-x_0$为$\mathbb{R}^p$的线性子空间。
+                    从$H_{(A,b)}-x_0$的定义上可以看出$H_{(A,b)}-x_0$是$\mathcal{M}(A')$的正交补空间，于是$H_{(A,b)}=\{x\, |\, (x-x_0) \perp \mathcal{M}(A')\}$。
+                \item
+                    由于矩阵$A$行满秩，所以方程组$Ax=b$必有解，从而$H_{(A,b)}$不为空集。
+                    记方程组$Ax=0$的一个基解矩阵为$U$，则$\mathrm{d}(x\, ,H_{(A,b)})$即为向量$x-x_0$到$\mathcal{M}(U)$的距离。
+                    若记$y^*$为关于$y$的方程组$U'Uy=U'(x-x_0)$的解，则$\mathrm{d}(x\, ,H_{(A,b)})=\rVert x-x_0-Uy^*\rVert_2$。
+            \end{enumerate}
+        \end{solution}
+
+    \item	% 9
+        设矩阵$A$非奇异，矩阵$D$为一方阵，证明：
+        \begin{equation*}
+            \begin{vmatrix}
+                A & B \\
+                C & D
+            \end{vmatrix}=|A||D-CA^{-1}B|
+        \end{equation*}
+
+        \begin{proof}
+            由初等变换，易见
+            \begin{equation*}
+                \begin{pmatrix}
+                    A & B \\
+                    C & D
+                \end{pmatrix}
+                \begin{pmatrix}
+                    \mathrm{I} & -A^{-1}B \\
+                    0 & \mathrm{I}
+                \end{pmatrix}=
+                \begin{pmatrix}
+                    A & 0 \\
+                    C & D-CA^{-1}B
+                \end{pmatrix}
+            \end{equation*}
+            从而结论成立。
+        \end{proof}
+
+    \item	% 10
+        设矩阵$A\, ,B$均为半正定矩阵且$A\le B$。
+        \begin{enumerate}[label=(\roman*)]
+            \item 证明：$AB^-A\le A$；\\
+            \item$AB^-A$依赖于广义逆的选择吗？
+        \end{enumerate}
+
+        \begin{proof}
+            \begin{enumerate}[label=(\roman*)]
+                \def\labelenumi{(\roman{enumi})}
+            \item
+                事实上，$B^-$不一定是对称矩阵，从而无法保证$AB^-A$
+                是对称矩阵，偏序关系无从谈起。
+            \item
+        \end{enumerate}
+    \end{proof}
+
+\item	% 11
+    举例说明：存在这样的矩阵$\Sigma$，$\Sigma$非半正定，但可以找到正交阵$(P\  Q)$，使得$P'\Sigma P=\Lambda_r\, ,Q'\Sigma Q=0$。 
+
+    \begin{proof}
+        令
+        \begin{equation*}
+            \Sigma=
+            \begin{pmatrix}
+                1 & 1 \\
+                0 & 0
+            \end{pmatrix} \qquad P=
+            \begin{pmatrix}
+                \frac{\sqrt{2}}{2} \\
+                \frac{\sqrt{2}}{2}
+            \end{pmatrix} \qquad Q=
+            \begin{pmatrix}
+                -\frac{\sqrt{2}}{2} \\
+                \frac{\sqrt{2}}{2}
+            \end{pmatrix}
+        \end{equation*}
+        容易验证，矩阵$\Sigma$的特征值为0和1，$(P\  Q)$为正交阵且$P'\Sigma P=1\, ,Q'\Sigma Q=0$。
+    \end{proof}
+
+\item	% 12
+    设矩阵$A\, ,B$均为半正定矩阵，且$A\le B$。证明：
+
+    \begin{enumerate}[label=(\roman*)]
+        \item$\mathrm{tr}(A) \le \mathrm{tr}(B)$；
+        \item 矩阵$A$的最大特征值不大于矩阵$B$的最大特征值；
+        \item 矩阵$A$的最小特征值不大于矩阵$B$的最大特征值；
+        \item$|A|\le |B|$；
+        \item$\mathcal{M}(A)\subset \mathcal{M}(B)$；
+        \item 设$P_A\, , P_B$分别是$A\, ,B$的正交投影矩阵，则
+            $P_A \le P_B$。
+    \end{enumerate}
+
+    \begin{proof}
+        \begin{enumerate}[label=(\roman*)]
+            \item
+                由$A\le B$知$\forall x \in \mathbb{R}^m$，有$x'Ax \le x'Bx$。
+                从而将$x$取遍$\epsilon_i\text{，}i=1\, ,2\, ,\cdots ,m$，就得到$A$对角线元素的值均不大于$B$对角线元素的值。
+                因此$\mathrm{tr}(A) \le \mathrm{tr}(B)$。
+            \item
+                易见
+                \begin{equation*}
+                    \lambda_{\max}(A)=\max_{x'x\ne 0}\frac{x'Ax}{x'x} \le \max_{x'x\ne 0}\frac{x'Bx}{x'x}=\lambda_{\max}(B)
+                \end{equation*}
+            \item
+                同样地，有 \begin{equation*}
+                    \lambda_{\min}(A)=\min_{x'x\ne 0}\frac{x'Ax}{x'x} \le \min_{x'x\ne 0}\frac{x'Bx}{x'x}=\lambda_{\min}(B)
+                \end{equation*}
+            \item
+                不妨设矩阵$A\, ,B$均正定。
+                由$A\le B$知$\forall x\in \mathbb{R}^m$且$x\ne 0$，有$0 < x'Ax \le x'Bx$。
+                从而
+                \begin{equation*}
+                    \begin{aligned}
+                        1 & \ge \frac{x'Ax}{x'Bx} \\
+                          & = \frac{y'B^{-\frac 12}AB^{-\frac 12}y}{y'y} \qquad (y=B^{\frac 12}x)
+                    \end{aligned}
+                \end{equation*}
+                因此$\lambda_{\max}(B^{-\frac 12}AB^{-\frac 12})\le 1$。
+                又易见矩阵$B^{-\frac 12}AB^{-\frac 12}$为正定矩阵，从而其特征值介于0和1之间（不包含0）。
+                因此$|B^{-\frac 12}AB^{-\frac 12}|\le 1$，即$|A|\le |B|$。
+            \item
+                对$x\in \mathcal{M}(B)^{\perp}$，有
+                \begin{equation*}
+                    \begin{aligned}
+                        Bx=0 & \quad \Rightarrow x'Bx=0 \\
+                             & \quad \Rightarrow x'Ax \le x'Bx=0 \\
+                             & \quad \Rightarrow x'Ax=0 \\
+                             & \quad \Rightarrow (A^{\frac{1}{2}}x)'(A^{\frac{1}{2}}x)=0 \\
+                             & \quad \Rightarrow (A^{\frac{1}{2}}x)=0 \\
+                             & \quad \Rightarrow Ax=0 \\
+                             & \quad \Rightarrow \mathcal{M}(B)^{\perp} \subset \mathcal{M}(A)^{\perp} \\
+                    \end{aligned}
+                \end{equation*}
+                从而$\mathcal{M}(A)\subset \mathcal{M}(B)$。
+            \item
+                对$\forall \xi \in \mathbb{R}^m$，存在$\xi_1\in \mathcal{M}(A)$和$\xi_2\in \mathcal{M}(A)^{\perp}$使得$\xi=\xi_1+\xi_2$。
+                从而
+                \begin{equation*}
+                    \xi' P_A\xi= \xi' P_AP_A\xi=(P_A\xi)'(P_A\xi)=\xi_1'\xi_1
+                \end{equation*}
+                于是
+                \begin{equation*}
+                    \begin{aligned}
+                        \xi'P_B\xi & = \xi_1'P_B\xi_1 + \xi_1'P_B\xi_2 +\xi_2'P_B\xi_1 + \xi_2'P_B\xi_2 \\
+                                   & = (P_B\xi)'(P_B\xi) + (P_B\xi_1)'\xi_2 + \xi_2'(P_B\xi_1) + \xi_2'P_B\xi_2 \\
+                                   & = \xi_1'\xi_1 + \xi_1‘’\xi_2 + \xi_2'\xi_1 + \xi_2'P_B\xi_2 \\
+                                   & = \xi_1'\xi_1 + \xi_2'P_B\xi_2 \\
+                                   & \ge \xi_1'\xi_1 =\xi' P_A\xi
+                    \end{aligned}
+                \end{equation*}
+                从而$P_A \le P_B$。
+        \end{enumerate}
+    \end{proof}
+
+\item	% 13
+    设矩阵$A\, ,B$均为半正定矩阵，且$\mathcal{M}(A)\subset \mathcal{M}(B)$。
+    举例说明$A\le B$未必成立。
+
+    \begin{proof}
+        令$A=\mathrm{diag}(1\, ,3\, ,0\, ,0)\ ,B=\mathrm{diag}(1\, ,1\, ,1\, ,0)$，则易见 $A$每一列都可由 $B$线性表出，从而$\mathcal{M}(A)\subset \mathcal{M}(B)$。
+        取向量$x=(0\, ,1\, ,0\, ,0)'$，则 $x'Ax>x'Bx$，即$A\le B$不成立。
+    \end{proof}
+\end{enumerate}
+
+\end{document}
